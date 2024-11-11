@@ -111,11 +111,12 @@ class Game:
                     if event.key == pygame.K_ESCAPE:
                         self.running = False
 
-                if event.type == pygame.MOUSEBUTTONDOWN and self.terrain.terrain[0][0] == "car" and self.terrain.terrain[1][0] == "car":
-                    mouse_pos = event.pos
-                    if self.rect.collidepoint(mouse_pos):
-                        self.stop, self.stopTemps, self.startTemps, self.nbrCoup = 0, 0, 0, 0 #met le menu reset le temps et le nbr de coup
-                        
+                if self.terrain.terrain is not None:
+                    if event.type == pygame.MOUSEBUTTONDOWN and self.terrain.terrain[0][0] == "car" and self.terrain.terrain[1][0] == "car":
+                        mouse_pos = event.pos
+                        if self.rect.collidepoint(mouse_pos):
+                            self.stop, self.stopTemps, self.startTemps, self.nbrCoup = 0, 0, 0, 0 #met le menu reset le temps et le nbr de coup
+                            
             self.mettreajour_screen()
             pygame.display.flip()
 
@@ -124,7 +125,7 @@ class Game:
         self.screen.fill((0, 0, 0))
 
         # Si pas de niveau séléctionne afficher menu
-        if self.stop == 0 or self.stop == 1:
+        if self.stop == 0 or self.stop == 1 or self.stop == 3:
             self.stop, self.terrain.terrain = menu.afficher_menu(self.stop)
             if self.terrain.terrain is not None:
                 self.selected = self.element_select()

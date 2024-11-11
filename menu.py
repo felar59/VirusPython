@@ -12,9 +12,14 @@ def afficher_menu(stop):
         [["y", "w", "w", "x"], ["x", "x", "x"], ["y", "w", "u", "g"], ["u", "u", "g"], ["x", "x", "d", "d"], ["x", "car", "d"], ["x", "x", "car", "x"]], #Lvl 5
     ]
     # Chargement et affichage de l'arrière-plan
-    image = pygame.image.load("./PygameAssets/bgLevelSelect.png")
-    image_agrandie = pygame.transform.scale(image, (1920, 1080))
-    screen.blit(image_agrandie, (0, 0))
+    if  stop == 0 or stop == 1:
+        image = pygame.image.load("./PygameAssets/bgLevelSelect.png")
+        image_agrandie = pygame.transform.scale(image, (1920, 1080))
+        screen.blit(image_agrandie, (0, 0))
+    else:
+        image = pygame.image.load("./PygameAssets/ReglesBg.png")
+        image_agrandie = pygame.transform.scale(image, (1920, 1080))
+        screen.blit(image_agrandie, (0, 0))
     # Dictionnaire de dictionnaire pour stocker les boutons et leurs positions
     if stop == 0:
         boutons = {
@@ -27,8 +32,12 @@ def afficher_menu(stop):
             2: {"image": pygame.image.load("./PygameAssets/Buttons/JUNIOR.png"), "position": (990, 450)},
             3: {"image": pygame.image.load("./PygameAssets/Buttons/EXPERT.png"), "position": (750, 520)},
             4: {"image": pygame.image.load("./PygameAssets/Buttons/MASTER.png"), "position": (990, 520)},
-            5: {"image": pygame.image.load("./PygameAssets/Buttons/WIZARD.png"), "position": (1920//2 - 218//2, 590)},
-            6: {"image": pygame.image.load("./PygameAssets/Buttons/MENU.png"), "position": (1920//2 - 218//2, 680)},
+            5: {"image": pygame.image.load("./PygameAssets/Buttons/WIZARD.png"), "position": (1920//2 - 185//2, 590)},
+            6: {"image": pygame.image.load("./PygameAssets/Buttons/MENU.png"), "position": (1920//2 - 185//2, 700)},
+        }
+    elif stop == 3:
+        boutons = {
+            1: {"image": pygame.image.load("./PygameAssets/Buttons/MENU.png"), "position": (1920//2 - 190//2, 580)},
         }
     # Affichage de tous les boutons + gestion des événement pour définire le niveau
     for key, bouton in boutons.items():
@@ -51,6 +60,8 @@ def afficher_menu(stop):
                     if stop == 0:
                         if key == 1:
                             stop = 1 # Change stop pour passer à la selection de niveau
+                        if key == 2:
+                            stop = 3 # Change stop pour passer à la selection de niveau
                     elif stop == 1:
                         if key == 6:
                             stop = 0
@@ -59,5 +70,9 @@ def afficher_menu(stop):
                             print(terrain)
                             stop = 2  # Change stop pour passer au jeu
                             return stop, terrain
+                    elif stop == 3:
+                        if key == 1:
+                            stop = 0
+                        
 
     return stop, None
